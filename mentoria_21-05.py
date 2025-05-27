@@ -37,6 +37,13 @@ La primera fila tendrá 1 asterisco, la segunda 2, y así sucesivamente.
     
 
 #Nivel 3 Pirámide de asteríscos, con la cantidad de asteriscos igual a la fila
-filas =int(input('Ingrese el número de filas que tendrá sú pirámide:'))
-for i in range (filas):
-    print(' '*(filas-i-1)+('* '*(i +1)))
+# filas =int(input('Ingrese el número de filas que tendrá sú pirámide:'))
+# for i in range (filas):
+#     print(' '*(filas-i-1)+('* '*(i +1)))
+filas = 5
+for i in range(1, filas+1):
+    print(' ' * (filas - i), end='')
+    for j in range(1,(2*i)):
+        if j%2:
+            print('* ', end='')
+    print()
