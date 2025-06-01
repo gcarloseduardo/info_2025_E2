@@ -72,7 +72,7 @@ def eliminar_seleccionados():
     for item in tabla.get_children():
         valores = tabla.item(item, "values")
         if len(valores) > 3 and valores[3] == "✓":
-            mensaje = messagebox.askquestion('Advertencia',"Está seguro que quiere eliminar el item, Y/N")
+            mensaje = messagebox.askquestion('Advertencia',"Está seguro que quiere eliminar el item, S/N")
             if mensaje == "yes":
                 tabla.delete(item)
             else:
@@ -83,15 +83,22 @@ def eliminar_seleccionados():
 # Este es el botón para eliminar productos (todavía no hace nada...)
 boton_eliminar = tk.Button(ventana, text="Eliminar", bg="#ffdddd", command=eliminar_seleccionados)
 boton_eliminar.pack(pady=5)
-
+''' definimos la función buscar en tabla, con un ciclo For. Con el método get_children(), que devuelve una tupla de identificadores 
+de elementos, luego iteramos esa tupla con el ciclo for y compararamos los valores asociados al item con la consulta. Si son iguales,
+seleccionamos el elemento del arból, con el método selection_add().
+'''
 def buscar_en_tabla(consulta):
     items = tabla.get_children()
-    for item in items:
+    contador = 0
+    tabla.selection_remove(items)
+    for item in items:  
         if consulta.lower() in str(tabla.item(item)['values']).lower():
-            tabla.selection_set(item)
+            tabla.selection_add(item)
             tabla.focus(item)
-            return
-    messagebox.showinfo("Buscar", f"No encontró resultados para '{consulta}'.")
+            contador +=1
+            pass
+    if contador == 0:
+        messagebox.showinfo("Buscar", f"No encontró resultados para '{consulta}'.")
 
 # entrada de busqueda
 buscar_entrada= ttk.Entry(ventana)
