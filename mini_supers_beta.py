@@ -67,11 +67,17 @@ tabla.column('seleccionado', width=50, anchor='center')
 tabla.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
 scroll.config(command=tabla.yview)
 
+#Definimos la función eliminar seleccionados
 def eliminar_seleccionados():
     for item in tabla.get_children():
         valores = tabla.item(item, "values")
         if len(valores) > 3 and valores[3] == "✓":
-            tabla.delete(item)
+            mensaje = messagebox.askquestion('Advertencia',"Está seguro que quiere eliminar el item, Y/N")
+            if mensaje == "yes":
+                tabla.delete(item)
+            else:
+               return
+            
             
 
 # Este es el botón para eliminar productos (todavía no hace nada...)
