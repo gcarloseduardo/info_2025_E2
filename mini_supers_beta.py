@@ -47,7 +47,7 @@ def alternar_check(event):
     valores = list(tabla.item(item_id, "values"))
     valores[3] = "" if valores[3] == "✓" else "✓"
     tabla.item(item_id, values=valores)
-    
+    print(valores)
 
 tabla.bind("<Double-1>", alternar_check)
 
@@ -69,20 +69,27 @@ scroll.config(command=tabla.yview)
 
 #Definimos la función eliminar seleccionados
 def eliminar_seleccionados():
+    lista_id = []
     for item in tabla.get_children():
         valores = tabla.item(item, "values")
         if len(valores) > 3 and valores[3] == "✓":
-            mensaje = messagebox.askquestion('Advertencia',"Está seguro que quiere eliminar el item, S/N")
-            if mensaje == "yes":
+            lista_id.append(item)
+            pass
+    if len(lista_id) != 0:
+        mensaje = messagebox.askquestion('Advertencia',"Está seguro que quiere eliminar el item, S/N")
+        if mensaje == "yes":
+            for item in lista_id:
                 tabla.delete(item)
-            else:
-               return
-            
+        else:
+            return
+
+
             
 
 # Este es el botón para eliminar productos (todavía no hace nada...)
 boton_eliminar = tk.Button(ventana, text="Eliminar", bg="#ffdddd", command=eliminar_seleccionados)
 boton_eliminar.pack(pady=5)
+
 ''' definimos la función buscar en tabla, con un ciclo For. Con el método get_children(), que devuelve una tupla de identificadores 
 de elementos, luego iteramos esa tupla con el ciclo for y compararamos los valores asociados al item con la consulta. Si son iguales,
 seleccionamos el elemento del arból, con el método selection_add().
